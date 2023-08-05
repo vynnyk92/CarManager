@@ -1,4 +1,7 @@
-﻿using CarManager.DTOs;
+﻿using AutoMapper;
+using CarManager.DataAccess;
+using CarManager.DTOs;
+using CarManager.Models;
 
 namespace CarManager.Services
 {
@@ -10,16 +13,32 @@ namespace CarManager.Services
 
     public class CarProvider : ICarProvider
     {
+        private readonly ICarRepository _carRepository;
+        private readonly IMapper _mapper;
+        private readonly ILogger<CarProvider> _logger;
 
-
-        public Task<string> CreateCar(CarCreateDto carCreateDto)
+        public CarProvider(ICarRepository carRepository, ILogger<CarProvider> logger, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _carRepository = carRepository;
+            _logger = logger;
+            _mapper = mapper;
         }
 
-        public Task<IReadOnlyCollection<CarGetDto>> GetCars()
+        public async Task<string> CreateCar(CarCreateDto carCreateDto)
         {
-            throw new NotImplementedException();
+            var car = _mapper.Map<Car>(carCreateDto);
+            //Probably should be addressed to id generation service
+            car.Id = Guid.NewGuid().ToString();
+
+            var isCarCreated = await _carRepository.CreateCar(car);
+            return isCarCreated ? car.Id : throw new Exception();
+        }
+
+        public async Task<IReadOnlyCollection<CarGetDto>> GetCars()
+        {
+            var cars = await _carRepository.GetCars();
+            var carDtos = _mapper.Map<IReadOnlyCollection<CarGetDto>>(cars);
+            return carDtos;
         }
     }
 }

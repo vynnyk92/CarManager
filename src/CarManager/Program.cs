@@ -1,3 +1,7 @@
+using CarManager.Extensions;
+using CarManager.Services;
+using CarManager.Shared;
+
 namespace CarManager
 {
     public class Program
@@ -6,7 +10,20 @@ namespace CarManager
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //Configuration
+            var configuration = builder.Configuration;
+
+            builder.Services.Configure<AppSettings>(
+                builder.Configuration.GetSection(nameof(AppSettings)));
+
+            builder.Services.Configure<LocalstackSettings>(
+                builder.Configuration.GetSection(nameof(LocalstackSettings)));
+
             // Add services to the container.
+            builder.Services.AddAutoMapper();
+            builder.Services.AddSingleton<ICarProvider, CarProvider>();
+            builder.Services.AddDynamoDb(configuration);
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
