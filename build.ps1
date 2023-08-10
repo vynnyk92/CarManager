@@ -1,3 +1,7 @@
+param(
+    [string] $Project
+)
+
 function DotNetTest {
     param(
         [string] $Project
@@ -15,4 +19,4 @@ function DotNetTest {
     }
 }
 
-DotNetTest $project
+DotNetTest $Project
