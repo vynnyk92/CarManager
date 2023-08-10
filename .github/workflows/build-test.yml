@@ -24,8 +24,8 @@ jobs:
         shell: pwsh
         run: ./get-version.ps1
 
-      - name: Get dotnet-version
-        run: echo "${{steps.get-version.outputs}}"
+      - name: Print dotnet-version
+        run: echo "${{steps.get-version.outputs.dotnet-version}}"
       # - name: Build, Test and Publish
       #   shell: pwsh
       #   run: ./build.ps1
