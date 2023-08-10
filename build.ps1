@@ -7,7 +7,6 @@ function DotNetTest {
         
     & dotnet test `
         $Project `
-        -- RunConfiguration.TestSessionTimeout=900000
 
     Write-Output "After test project: $Project"
 
