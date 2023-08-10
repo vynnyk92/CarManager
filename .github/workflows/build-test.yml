@@ -1,0 +1,27 @@
+name: build-test
+on:
+  push:
+    # branches: [ master ]
+    paths-ignore:
+    - '**/*.gitattributes'
+    - '**/*.gitignore'
+    - '**/*.md'
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get dotnet-version
+        uses: ./.github/actions/get-dotnet-version
+
+      # - name: Build, Test and Publish
+      #   shell: pwsh
+      #   run: ./build.ps1
+
+
