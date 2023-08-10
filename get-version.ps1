@@ -3,4 +3,4 @@ $sdkFile      = Join-Path $solutionPath "global.json"
 
 $dotnetVersion = (Get-Content $sdkFile | Out-String | ConvertFrom-Json).sdk.version
 
-Write-Host $dotnetVersion
+Write-Output "::set-output name=dotnet-version::$dotnetVersion"
