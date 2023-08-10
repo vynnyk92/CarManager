@@ -1,8 +1,0 @@
-name: 'Get DotNet Version'
-description: 'Get DotNet Version from global.json file'
-outputs:
-  dotnet-version:
-    description: 'dotnet-version to use for build test and publish'
-runs:
-  using: node16
-  main: 'main.js'
