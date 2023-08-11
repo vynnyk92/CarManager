@@ -52,4 +52,7 @@ jobs:
         shell: pwsh
         run: ./publish.ps1
 
+      - name: Test Publis
+        run: echo ls
+
 
