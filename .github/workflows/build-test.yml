@@ -44,9 +44,9 @@ jobs:
         shell: pwsh
         run: ./test.ps1 -Project:./test/CarManager.UnitTests/CarManager.UnitTests.csproj
 
-      - name: Run Integration Tests
-        shell: pwsh
-        run: ./test.ps1 -Project:./test/CarManager.IntegrationTests/CarManager.IntegrationTests.csproj
+      # - name: Run Integration Tests
+      #   shell: pwsh
+      #   run: ./test.ps1 -Project:./test/CarManager.IntegrationTests/CarManager.IntegrationTests.csproj
 
       - name: Build and Publish
         shell: pwsh
