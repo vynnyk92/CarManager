@@ -29,7 +29,7 @@ jobs:
       - name: Get dotnet-version
         id: get-version
         shell: pwsh
-        run: ./scripts/get-version.ps1
+        run: ./get-version.ps1
 
       - name: Print dotnet-version
         shell: pwsh
@@ -42,10 +42,10 @@ jobs:
 
       - name: Run Unit Tests
         shell: pwsh
-        run: ./scripts/test.ps1 -Project:./test/CarManager.UnitTests/CarManager.UnitTests.csproj
+        run: ./test.ps1 -Project:./test/CarManager.UnitTests/CarManager.UnitTests.csproj
 
       - name: Run Integration Tests
         shell: pwsh
-        run: ./scripts/test.ps1 -Project:./test/CarManager.IntegrationTests/CarManager.IntegrationTests.csproj
+        run: ./test.ps1 -Project:./test/CarManager.IntegrationTests/CarManager.IntegrationTests.csproj
 
 
