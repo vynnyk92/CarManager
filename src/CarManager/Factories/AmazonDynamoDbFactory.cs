@@ -1,4 +1,5 @@
-﻿using Amazon;
+﻿using System.Net;
+using Amazon;
 using Amazon.DynamoDBv2;
 using CarManager.Helpers;
 using CarManager.Shared;
@@ -28,11 +29,11 @@ namespace CarManager.Factories
         {
             if (EnvironmentHelper.IsLocal(_appSettings.Environment))
             {
+
                 return new AmazonDynamoDBClient(
                     new AmazonDynamoDBConfig
                     {
-                        ServiceURL = $"https://{_localstackSettings.Host}:{_localstackSettings.ProxyPort}",
-                        RegionEndpoint = RegionEndpoint.GetBySystemName(_appSettings.RegionEndpoint)
+                        ServiceURL = $"http://{_localstackSettings.Host}:{_localstackSettings.ProxyPort}"
                     });
             }
 

@@ -5,6 +5,7 @@ namespace CarManager.Helpers
     public class EnvironmentHelper
     {
         public static bool IsLocal(string environment) =>
-            EnvironmentConstants.Development.Equals(environment, StringComparison.InvariantCultureIgnoreCase);
+            EnvironmentConstants.Development.Equals(environment, StringComparison.InvariantCultureIgnoreCase)
+            || EnvironmentConstants.LocalStack.Equals(environment, StringComparison.InvariantCultureIgnoreCase);
     }
 }
