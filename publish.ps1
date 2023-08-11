@@ -2,11 +2,13 @@ param(
     [string] $Project
 )
 
+$solutionPath = Split-Path $MyInvocation.MyCommand.Definition
+
 function DotNetPublish {
     param(
         [string] $Project
     )
-    $solutionPath = Split-Path $MyInvocation.MyCommand.Definition
+
     $publishPath = (Join-Path $solutionPath "publish")
 
     Write-Output "Before DotNetPublish project: $Project"
