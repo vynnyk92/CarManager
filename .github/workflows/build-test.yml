@@ -50,7 +50,7 @@ jobs:
 
       - name: Build and Publish
         shell: pwsh
-        run: ./publish.ps1
+        run: ./publish.ps1 -Project:./src/CarManager/CarManager.csproj
 
       - name: Test Publis
         run: echo ls
