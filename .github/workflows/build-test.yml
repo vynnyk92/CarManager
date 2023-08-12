@@ -11,9 +11,8 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    env:
-      aws_access_key_id: test1
-      aws_secret_access_key: test1
+    container: 
+      image: ubuntu-latest
     services:
       localstack:
         image: localstack/localstack:2.1.0
@@ -23,6 +22,8 @@ jobs:
           SERVICES: dynamodb,sns,sqs,s3
     name: build
     runs-on: ubuntu-latest
+    env:
+      environment: gha
     outputs:
       dotnet-version: ${{steps.get-version.outputs.dotnet-version}}
     steps:
