@@ -10,40 +10,39 @@ on:
     branches: [ master ]
   workflow_dispatch:
 jobs:
-  build:
-    container: 
-      image: mcr.microsoft.com/dotnet/sdk:6.0
-    services:
-      localstack:
-        image: localstack/localstack:2.1.0
-        ports:
-          - 4566:4566
-        env:
-          SERVICES: dynamodb,sns,sqs,s3
-    name: build
-    runs-on: ubuntu-latest
-    env:
-      environment: gha
-    outputs:
-      dotnet-version: ${{steps.get-version.outputs.dotnet-version}}
-      image-number: ${{steps.image-number-generator.outputs.image-number}}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  # build:
+  #   container: 
+  #     image: mcr.microsoft.com/dotnet/sdk:6.0
+  #   services:
+  #     localstack:
+  #       image: localstack/localstack:2.1.0
+  #       ports:
+  #         - 4566:4566
+  #       env:
+  #         SERVICES: dynamodb,sns,sqs,s3
+  #   name: build
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     environment: gha
+  #   outputs:
+  #     dotnet-version: ${{steps.get-version.outputs.dotnet-version}}
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-      - name: Get dotnet-version
-        id: get-version
-        shell: pwsh
-        run: ./get-version.ps1
+  #     - name: Get dotnet-version
+  #       id: get-version
+  #       shell: pwsh
+  #       run: ./get-version.ps1
 
-      - name: Print dotnet-version
-        shell: pwsh
-        run: Write-Output "${{steps.get-version.outputs.dotnet-version}}"
+  #     - name: Print dotnet-version
+  #       shell: pwsh
+  #       run: Write-Output "${{steps.get-version.outputs.dotnet-version}}"
 
-      - name: Dotnet Install
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: "${{steps.get-version.outputs.dotnet-version}}"
+  #     - name: Dotnet Install
+  #       uses: actions/setup-dotnet@v3
+  #       with:
+  #         dotnet-version: "${{steps.get-version.outputs.dotnet-version}}"
 
       # - name: Run Unit Tests
       #   shell: pwsh
@@ -64,6 +63,14 @@ jobs:
       #     path: |
       #       publish
 
+  publish-image:
+    outputs:
+      image-number: ${{steps.image-number-generator.outputs.image-number}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
       - name: Build Image Number
         id: image-number-generator
         run: echo image-number=${{github.base_ref}}-${{github.event_name}} >> $GITHUB_OUTPUT
@@ -85,6 +92,3 @@ jobs:
         with:
           push: true
           tags: carmanager/app:${{steps.image-number-generator.outputs.image-number}}
-
-
-
