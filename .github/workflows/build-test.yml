@@ -83,9 +83,9 @@ jobs:
       
       - name: Build Docker image
         run: |
-          docker build -t carmanager:${{github.event.pull_request.number}} .
+          docker build -t carmanager:latest .
 
       - name: Push Docker image
         run: |
-          docker tag carmanager:${{github.event.pull_request.number}} ${{ secrets.DOCKER_USERNAME }}/carmanager:${{github.event.pull_request.number}}
-          docker push ${{ secrets.DOCKER_USERNAME }}/carmanager:${{github.event.pull_request.number}}
+          docker tag carmanager:${{github.event.pull_request.number}} ${{ secrets.DOCKERHUB_USERNAME }}/carmanager:${{github.event.pull_request.number}}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/carmanager:${{github.event.pull_request.number}}
