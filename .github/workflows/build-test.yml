@@ -1,7 +1,7 @@
 name: build-test
 on:
   push:
-    # branches: [ master ]
+    branches: [ master ]
     paths-ignore:
     - '**/*.gitattributes'
     - '**/*.gitignore'
@@ -91,4 +91,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: carmanager/app:${{github.event.pull_request.number}}
+          tags: vynnyal/carmanager:${{github.event.pull_request.number}}
