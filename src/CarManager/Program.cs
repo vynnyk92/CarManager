@@ -24,6 +24,7 @@ namespace CarManager
             builder.Services.AddSingleton<ICarProvider, CarProvider>();
             builder.Services.AddDynamoDb(configuration);
 
+            builder.Services.AddHealthChecks().AddCheck<SampleHealthCheckWithArgs>("/health/check"); ;
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -31,13 +32,10 @@ namespace CarManager
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
-
+            app.MapHealthChecks("/health/check");
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseAuthorization();
 

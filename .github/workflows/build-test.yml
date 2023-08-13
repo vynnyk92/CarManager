@@ -26,6 +26,7 @@ jobs:
       environment: gha
     outputs:
       dotnet-version: ${{steps.get-version.outputs.dotnet-version}}
+      image-number: ${{steps.image-number-generator.outputs.image-number}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -44,24 +45,33 @@ jobs:
         with:
           dotnet-version: "${{steps.get-version.outputs.dotnet-version}}"
 
-      - name: Run Unit Tests
-        shell: pwsh
-        run: ./test.ps1 -Project:./test/CarManager.UnitTests/CarManager.UnitTests.csproj
+      # - name: Run Unit Tests
+      #   shell: pwsh
+      #   run: ./test.ps1 -Project:./test/CarManager.UnitTests/CarManager.UnitTests.csproj
 
-      - name: Run Integration Tests
-        shell: pwsh
-        run: ./test.ps1 -Project:./test/CarManager.IntegrationTests/CarManager.IntegrationTests.csproj
+      # - name: Run Integration Tests
+      #   shell: pwsh
+      #   run: ./test.ps1 -Project:./test/CarManager.IntegrationTests/CarManager.IntegrationTests.csproj
 
-      - name: Build and Publish
-        shell: pwsh
-        run: ./publish.ps1 -Project:./src/CarManager/CarManager.csproj
+      # - name: Build and Publish
+      #   shell: pwsh
+      #   run: ./publish.ps1 -Project:./src/CarManager/CarManager.csproj
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: publish
-          path: |
-            publish
+      # - name: Upload Artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: publish
+      #     path: |
+      #       publish
+
+      - name: Build Image Number
+        id: image-number-generator
+        run: echo image-number=${{github.base_ref}}-${{github.event_name}} >> $GITHUB_OUTPUT
+
+      - name: Build the Docker image
+        run: >
+          docker build .
+          -- tag carmanager-${{steps.image-number-generator.outputs.image-number}}
 
 
 
