@@ -87,5 +87,5 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker tag carmanager:${{github.event.pull_request.number}} ${{ env.DOCKER_USERNAME }}/carmanager:${{github.event.pull_request.number}}
-          docker push ${{ env.DOCKER_USERNAME }}/carmanager:${{github.event.pull_request.number}}
+          docker tag carmanager:${{github.event.pull_request.number}} ${{ secrets.DOCKER_USERNAME }}/carmanager:${{github.event.pull_request.number}}
+          docker push ${{ secrets.DOCKER_USERNAME }}/carmanager:${{github.event.pull_request.number}}
