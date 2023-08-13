@@ -83,7 +83,7 @@ jobs:
       
       - name: Build Docker image
         run: |
-          docker build -t carmanager:latest .
+          docker build -t carmanager:${{github.event.pull_request.number}} .
 
       - name: Push Docker image
         run: |
