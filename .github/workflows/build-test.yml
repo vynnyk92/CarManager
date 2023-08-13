@@ -73,7 +73,7 @@ jobs:
       
       - name: Build Image Number
         id: image-number-generator
-        run: echo image-number="$GITHUB_PR_NUMBER" >> $GITHUB_OUTPUT
+        run: echo image-number= ${{github.event.pull_request.number}} >> $GITHUB_OUTPUT
 
       -  name: Set up QEMU
          uses: docker/setup-qemu-action@v2
@@ -91,4 +91,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: carmanager/app:$GITHUB_PR_NUMBER
+          tags: carmanager/app:${{github.event.pull_request.number}}
