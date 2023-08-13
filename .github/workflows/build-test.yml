@@ -91,4 +91,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: carmanager/app:${{steps.image-number-generator.outputs.image-number}}
+          tags: carmanager/app:$GITHUB_PR_NUMBER
